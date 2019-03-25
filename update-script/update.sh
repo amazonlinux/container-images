@@ -114,7 +114,7 @@ echo_green "Output will be in $OUTDIR"
 
 (
     cd "$OUTDIR"
-    git clone --single-branch https://github.com/aws/amazon-linux-docker-images.git images
+    git clone --single-branch https://github.com/amazonlinux/container-images.git images
     cd images
     git lfs install --local
 )
@@ -238,11 +238,11 @@ done
 
 # Write out the library file
 cat >library/amazonlinux <<EOF
-Maintainers: Amazon Linux Team <amazon-linux@amazon.com> (@aws),
+Maintainers: Amazon Linux <amazon-linux@amazon.com> (@amazonlinux),
              iliana weller (@ilianaw),
              Praveen K Paladugu (@praveen-pk),
              Eric Warehime (@Eric-Warehime)
-GitRepo: https://github.com/aws/amazon-linux-docker-images.git
+GitRepo: https://github.com/amazonlinux/container-images.git
 GitCommit: ${COMMIT_FOR_BRANCH[master]}
 
 Tags: ${FULL_VERSIONS[2]}, 2, latest
