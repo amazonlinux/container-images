@@ -23,7 +23,7 @@
 # - Not all images need to be updated, but if you're updating a multi-arch
 #   image, all architectures are updated at once.
 #
-# Blame: iliana weller <iweller@amazon.com>
+# Blame: iliana destroyer of worlds <iweller@amazon.com>
 
 set -euo pipefail
 
@@ -239,7 +239,7 @@ done
 # Write out the library file
 cat >library/amazonlinux <<EOF
 Maintainers: Amazon Linux <amazon-linux@amazon.com> (@amazonlinux),
-             iliana weller (@ilianaw),
+             iliana destroyer of worlds (@iliana),
              Praveen K Paladugu (@praveen-pk),
              Eric Warehime (@Eric-Warehime)
 GitRepo: https://github.com/amazonlinux/container-images.git
