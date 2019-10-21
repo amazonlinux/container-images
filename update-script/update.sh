@@ -240,7 +240,6 @@ done
 cat >library/amazonlinux <<EOF
 Maintainers: Amazon Linux <amazon-linux@amazon.com> (@amazonlinux),
              iliana destroyer of worlds (@iliana),
-             Praveen K Paladugu (@praveen-pk),
              Eric Warehime (@Eric-Warehime)
 GitRepo: https://github.com/amazonlinux/container-images.git
 GitCommit: ${COMMIT_FOR_BRANCH[master]}
