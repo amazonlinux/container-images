@@ -1,5 +1,5 @@
 #!/bin/bash
-# Copyright 2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+# Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
 # SPDX-License-Identifier: Apache-2.0
 #
 # Locally updates docker-library/official-images with new Amazon Linux
@@ -240,7 +240,9 @@ done
 cat >library/amazonlinux <<EOF
 Maintainers: Amazon Linux <amazon-linux@amazon.com> (@amazonlinux),
              iliana destroyer of worlds (@iliana),
-             Eric Warehime (@Eric-Warehime)
+             Frédérick Lefebvre (@fred-lefebvre),
+             Samuel Karp (@samuelkarp),
+             Stewart Smith (@stewartsmith)
 GitRepo: https://github.com/amazonlinux/container-images.git
 GitCommit: ${COMMIT_FOR_BRANCH[master]}
 
