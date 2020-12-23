@@ -242,7 +242,8 @@ Maintainers: Amazon Linux <amazon-linux@amazon.com> (@amazonlinux),
              iliana destroyer of worlds (@iliana),
              Frédérick Lefebvre (@fred-lefebvre),
              Samuel Karp (@samuelkarp),
-             Stewart Smith (@stewartsmith)
+             Stewart Smith (@stewartsmith),
+             Jamie Anderson (@jamieand)
 GitRepo: https://github.com/amazonlinux/container-images.git
 GitCommit: ${COMMIT_FOR_BRANCH[master]}
 
