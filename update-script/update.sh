@@ -239,7 +239,6 @@ done
 # Write out the library file
 cat >library/amazonlinux <<EOF
 Maintainers: Amazon Linux <amazon-linux@amazon.com> (@amazonlinux),
-             iliana destroyer of worlds (@iliana),
              Frédérick Lefebvre (@fred-lefebvre),
              Samuel Karp (@samuelkarp),
              Stewart Smith (@stewartsmith),
