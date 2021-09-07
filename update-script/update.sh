@@ -247,6 +247,7 @@ Maintainers: Amazon Linux <amazon-linux@amazon.com> (@amazonlinux),
              Sumit Tomer (@sktomer),
              Sean Kelly (@cbgbt),
              Tanu Rampal (@trampal)
+             Kyle Gosselin-Harris (@kgharris)
 GitRepo: https://github.com/amazonlinux/container-images.git
 GitCommit: ${COMMIT_FOR_BRANCH[master]}
 
