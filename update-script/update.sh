@@ -78,7 +78,7 @@ set_version() {
     temp_version=$(rpm --root "$root_dir" -q system-release --qf '%{version}')
     
     case "$temp_version" in
-        2022.?.??????)
+        2022.?.????????)
             printf 2022
             ;;
         *)
