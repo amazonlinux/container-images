@@ -72,6 +72,21 @@ build_branch_name() {
     esac
 }
 
+set_version() {
+    root_dir="${1:?}"
+    
+    temp_version=$(rpm --root "$root_dir" -q system-release --qf '%{version}')
+    
+    case "$temp_version" in
+        2022.?.??????)
+            printf 2022
+            ;;
+        *)
+            printf %s "$temp_version"
+            ;;
+    esac
+}
+
 OUTDIR=
 while getopts "o:" OPTION; do
     case $OPTION in
@@ -144,8 +159,7 @@ for arg in "$@"; do
     rpm --root "$image_workdir" --rebuilddb
 
     # Get system-release version
-    ## Needs to change for AL2022
-    version=$(rpm --root "$image_workdir" -q system-release --qf '%{version}')
+    version=$(set_version "$image_workdir")
     # Get architecture of image
     arch=$(rpm --root "$image_workdir" -q glibc --qf '%{arch}')
     branch_name=$(build_branch_name "$version" "$arch")
