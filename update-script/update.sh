@@ -47,6 +47,9 @@ build_branch_name() {
     arch="${2:?}"
 
     case "$version" in
+        2022)
+            printf al%s "$version"
+            ;;
         201?.??)
             printf %s "$version"
             ;;
@@ -141,6 +144,7 @@ for arg in "$@"; do
     rpm --root "$image_workdir" --rebuilddb
 
     # Get system-release version
+    ## Needs to change for AL2022
     version=$(rpm --root "$image_workdir" -q system-release --qf '%{version}')
     # Get architecture of image
     arch=$(rpm --root "$image_workdir" -q glibc --qf '%{arch}')
@@ -221,12 +225,12 @@ git clone https://github.com/docker-library/official-images.git
 cd official-images
 
 # If we didn't process a version locally, get the current date-stamped image tag
-for version in 2 2018.03; do
+for version in 2 2018.03 2022; do
     [[ -z ${FULL_VERSIONS[$version]:-} ]] && FULL_VERSIONS[$version]=$(awk -v v=$version, '$3 == v {print $2}' library/amazonlinux | tr -d ,)
 done
 
 # Get commit hashes for all the branches
-for branch in master {amzn2,amzn2-arm64,2018.03}{,-with-sources}; do
+for branch in master {amzn2,amzn2-arm64,2018.03,al2022,al2022-arm64}{,-with-sources}; do
     # First try to get the local commit; if it's not local, we're not pushing
     # it, so get the remote commit for this branch.
     COMMIT_FOR_BRANCH[$branch]=$(
@@ -276,6 +280,20 @@ Tags: ${FULL_VERSIONS[2018.03]}-with-sources, 2018.03-with-sources, 1-with-sourc
 Architectures: amd64
 amd64-GitFetch: refs/heads/2018.03-with-sources
 amd64-GitCommit: ${COMMIT_FOR_BRANCH[2018.03-with-sources]}
+
+Tags: ${FULL_VERSIONS[2022]}, 2022
+Architectures: amd64, arm64v8
+amd64-GitFetch: refs/heads/al2022
+amd64-GitCommit: ${COMMIT_FOR_BRANCH[2022]}
+arm64v8-GitFetch: refs/heads/al2022-arm64
+arm64v8-GitCommit: ${COMMIT_FOR_BRANCH[al2022-arm64]}
+
+Tags: ${FULL_VERSIONS[2022]}-with-sources, 2022-with-sources
+Architectures: amd64, arm64v8
+amd64-GitFetch: refs/heads/al2022-with-sources
+amd64-GitCommit: ${COMMIT_FOR_BRANCH[al2022-with-sources]}
+arm64v8-GitFetch: refs/heads/al2022-arm64-with-sources
+arm64v8-GitCommit: ${COMMIT_FOR_BRANCH[al2022-arm64-with-sources]}
 EOF
 git commit -m "Update Amazon Linux images" library/amazonlinux
 git --no-pager show
