@@ -144,7 +144,7 @@ for arg in "$@"; do
     rpm --root "$image_workdir" --rebuilddb
 
     # Get system-release version
-    [[ $(rpm --root "$image_workdir" -q system-release --qf '%{version}') =~ (^2018.03$|^2$|20[0-9]{2}) ]] && version="${BASH_REMATCH[1]}" || exit 1
+    [[ $(rpm --root "$image_workdir" -q system-release --qf '%{version}') =~ (^2018.03$|^2$|^20[0-9]{2}) ]] && version="${BASH_REMATCH[1]}" || exit 1
     # Get architecture of image
     arch=$(rpm --root "$image_workdir" -q glibc --qf '%{arch}')
     branch_name=$(build_branch_name "$version" "$arch")
