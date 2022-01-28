@@ -247,6 +247,7 @@ Maintainers: Amazon Linux <amazon-linux@amazon.com> (@amazonlinux),
              Sean Kelly (@cbgbt),
              Tanu Rampal (@trampal),
              Kyle Gosselin-Harris (@kgharris),
+             Sam Thornton (@boostyc),
              Preston Carpenter (@timidger),
              Richard Kelly (@rpkelly)
 GitRepo: https://github.com/amazonlinux/container-images.git
