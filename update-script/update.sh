@@ -133,7 +133,7 @@ for arg in "$@"; do
     # "This is a little fragile" is the understatement of the year
     # Example argument: "some-directory/amzn2-container-raw-2.0.20190207-arm64.tar.xz"
     # Expected awk output: "2.0.20190207"
-    full_version=$(awk -F- '{ print $4 }' <<<"$filename")
+    full_version=$(awk -F- '{ print ($1 == "al2022" ? $3 : $4) }' <<<"$filename")
     [[ -z $full_version ]] && { echo_red "image version is empty string"; exit 1; }
 
     # Extract the RPM DB from the tarball
@@ -150,7 +150,16 @@ for arg in "$@"; do
     branch_name=$(build_branch_name "$version" "$arch")
 
     FULL_VERSIONS[$version]=$full_version
-
+    if [[ $version == "2022" ]]; then
+	    # https://github.com/docker/for-linux/issues/219
+	    [ ! -d "/sys/fs/cgroup/systemd" ] && sudo mkdir /sys/fs/cgroup/systemd && sudo mount -t cgroup -o none,name=systemd cgroup /sys/fs/cgroup/systemd
+	    # Push AL2022 containers to DockerHub once the same have been published to the Amazon Linux ECR. https://gallery.ecr.aws/amazonlinux/amazonlinux
+	    base_image="public.ecr.aws/amazonlinux/amazonlinux:2022"
+	    yum_cmd="yum -y --enablerepo=amazonlinux-source install findutils yum-utils tar gzip"
+    else
+	    base_image="amazonlinux:$version"
+	    yum_cmd="yum -y install findutils yum-utils tar gzip"
+    fi
     # Build the source RPM bundle
     # Get the list of source RPMs to fetch:
     rpm --root "$image_workdir" -qa --qf '%{SOURCERPM}\n' | grep -v '^(none)$' | sed -e 's/\.rpm$//' | sort -u >"$image_workdir/srpm_list"
@@ -163,8 +172,8 @@ for arg in "$@"; do
             # Build an "srpm-fetcher" Docker image that reads source RPM names on stdin and generates a tarball on stdout.
             # To make a deterministic tarball, we need to ensure consistent ordering of files within and ensure no timestamps.
             docker build -t "srpm-fetcher:$version" -f - "$WORKDIR/empty" <<EOF
-FROM amazonlinux:$version
-RUN yum -y install findutils yum-utils tar gzip
+FROM $base_image
+RUN $yum_cmd
 WORKDIR /srpms
 CMD set -euxo pipefail; \\
     xargs yumdownloader --source 1>&2; \\
@@ -281,14 +290,14 @@ Architectures: amd64
 amd64-GitFetch: refs/heads/2018.03-with-sources
 amd64-GitCommit: ${COMMIT_FOR_BRANCH[2018.03-with-sources]}
 
-Tags: ${FULL_VERSIONS[2022]}, 2022
+Tags: ${FULL_VERSIONS[2022]}, 2022, devel
 Architectures: amd64, arm64v8
 amd64-GitFetch: refs/heads/al2022
 amd64-GitCommit: ${COMMIT_FOR_BRANCH[al2022]}
 arm64v8-GitFetch: refs/heads/al2022-arm64
 arm64v8-GitCommit: ${COMMIT_FOR_BRANCH[al2022-arm64]}
 
-Tags: ${FULL_VERSIONS[2022]}-with-sources, 2022-with-sources
+Tags: ${FULL_VERSIONS[2022]}-with-sources, 2022-with-sources, devel-with-sources
 Architectures: amd64, arm64v8
 amd64-GitFetch: refs/heads/al2022-with-sources
 amd64-GitCommit: ${COMMIT_FOR_BRANCH[al2022-with-sources]}
