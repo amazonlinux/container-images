@@ -259,7 +259,7 @@ Maintainers: Amazon Linux <amazon-linux@amazon.com> (@amazonlinux),
              Sean Kelly (@cbgbt),
              Tanu Rampal (@trampal),
              Kyle Gosselin-Harris (@kgharris),
-             Sam Thornton (@boostyc),
+             Sam Thornton (@mrthornazon),
              Preston Carpenter (@timidger),
              Richard Kelly (@rpkelly),
              Joseph Howell-Burke (@jhowell-burke)
