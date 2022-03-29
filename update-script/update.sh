@@ -262,7 +262,8 @@ Maintainers: Amazon Linux <amazon-linux@amazon.com> (@amazonlinux),
              Sam Thornton (@mrthornazon),
              Preston Carpenter (@timidger),
              Richard Kelly (@rpkelly),
-             Joseph Howell-Burke (@jhowell-burke)
+             Joseph Howell-Burke (@jhowell-burke),
+	     Joe Gawrieh (@theOtherJoe)
 GitRepo: https://github.com/amazonlinux/container-images.git
 GitCommit: ${COMMIT_FOR_BRANCH[master]}
 
