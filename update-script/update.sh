@@ -252,7 +252,6 @@ done
 cat >library/amazonlinux <<EOF
 Maintainers: Amazon Linux <amazon-linux@amazon.com> (@amazonlinux),
              Frédérick Lefebvre (@fred-lefebvre),
-             Samuel Karp (@samuelkarp),
              Stewart Smith (@stewartsmith),
              Christopher Miller (@mysteriouspants),
              Sumit Tomer (@sktomer),
