@@ -308,4 +308,5 @@ EOF
 git commit -m "Update Amazon Linux images" library/amazonlinux
 git --no-pager show
 
+mv $OUTDIR/images $OUTDIR/container-images
 echo_green "Finished repositories in $OUTDIR"
