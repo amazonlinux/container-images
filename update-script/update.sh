@@ -117,8 +117,8 @@ echo_green "Output will be in $OUTDIR"
 
 (
     cd "$OUTDIR"
-    git clone --single-branch https://github.com/amazonlinux/container-images.git images
-    cd images
+    git clone --single-branch https://github.com/amazonlinux/container-images.git
+    cd container-images
     git lfs install --local
 )
 
@@ -151,14 +151,14 @@ for arg in "$@"; do
 
     FULL_VERSIONS[$version]=$full_version
     if [[ $version == "2022" ]]; then
-	    # https://github.com/docker/for-linux/issues/219
-	    [ ! -d "/sys/fs/cgroup/systemd" ] && sudo mkdir /sys/fs/cgroup/systemd && sudo mount -t cgroup -o none,name=systemd cgroup /sys/fs/cgroup/systemd
-	    # Push AL2022 containers to DockerHub once the same have been published to the Amazon Linux ECR. https://gallery.ecr.aws/amazonlinux/amazonlinux
-	    base_image="public.ecr.aws/amazonlinux/amazonlinux:2022"
-	    yum_cmd="yum -y --enablerepo=amazonlinux-source install findutils yum-utils tar gzip"
+        # https://github.com/docker/for-linux/issues/219
+        [ ! -d "/sys/fs/cgroup/systemd" ] && sudo mkdir /sys/fs/cgroup/systemd && sudo mount -t cgroup -o none,name=systemd cgroup /sys/fs/cgroup/systemd
+        # Push AL2022 containers to DockerHub once the same have been published to the Amazon Linux ECR. https://gallery.ecr.aws/amazonlinux/amazonlinux
+        base_image="public.ecr.aws/amazonlinux/amazonlinux:2022"
+        yum_cmd="yum -y --enablerepo=amazonlinux-source install findutils yum-utils tar gzip"
     else
-	    base_image="amazonlinux:$version"
-	    yum_cmd="yum -y install findutils yum-utils tar gzip"
+        base_image="amazonlinux:$version"
+        yum_cmd="yum -y install findutils yum-utils tar gzip"
     fi
     # Build the source RPM bundle
     # Get the list of source RPMs to fetch:
@@ -194,7 +194,7 @@ EOF
         echo "$srpm_bundle_sha256" >"$WORKDIR/srpm-bundle-${srpm_list_sha256}.tar.gz.sha256"
     fi
 
-    pushd "$OUTDIR/images" >/dev/null
+    pushd "$OUTDIR/container-images" >/dev/null
 
     # Normal branch
     git checkout -B "$branch_name"
@@ -213,8 +213,8 @@ EOF
     cp "$WORKDIR/srpm-bundle-${srpm_list_sha256}.tar.gz" srpm-bundle.tar.gz
     cat >>Dockerfile <<EOF
 RUN mkdir /usr/src/srpm \\
- && curl -o /usr/src/srpm/srpm-bundle.tar.gz "https://amazon-linux-docker-sources.s3-accelerate.amazonaws.com/srpm-bundle-${srpm_list_sha256}.tar.gz" \\
- && echo "$srpm_bundle_sha256  /usr/src/srpm/srpm-bundle.tar.gz" | sha256sum -c -
+    && curl -o /usr/src/srpm/srpm-bundle.tar.gz "https://amazon-linux-docker-sources.s3-accelerate.amazonaws.com/srpm-bundle-${srpm_list_sha256}.tar.gz" \\
+    && echo "$srpm_bundle_sha256  /usr/src/srpm/srpm-bundle.tar.gz" | sha256sum -c -
 EOF
     git add .gitattributes srpm-bundle.tar.gz Dockerfile
     git commit -m "Add $full_version $arch image with sources"
@@ -243,7 +243,7 @@ for branch in master {amzn2,amzn2-arm64,2018.03,al2022,al2022-arm64}{,-with-sour
     # it, so get the remote commit for this branch.
     COMMIT_FOR_BRANCH[$branch]=$(
         set -euo pipefail
-        cd "$OUTDIR/images"
+        cd "$OUTDIR/container-images"
         git rev-parse --verify "$branch" 2>/dev/null || git ls-remote origin "$branch" | awk '{ print $1 }'
     )
 done
@@ -251,19 +251,19 @@ done
 # Write out the library file
 cat >library/amazonlinux <<EOF
 Maintainers: Amazon Linux <amazon-linux@amazon.com> (@amazonlinux),
-             Frédérick Lefebvre (@fred-lefebvre),
-             Stewart Smith (@stewartsmith),
-             Christopher Miller (@mysteriouspants),
-             Sumit Tomer (@sktomer),
-             Sean Kelly (@cbgbt),
-             Tanu Rampal (@trampal),
-             Kyle Gosselin-Harris (@kgharris),
-             Sam Thornton (@mrthornazon),
-             Preston Carpenter (@timidger),
-             Richard Kelly (@rpkelly),
-             Joseph Howell-Burke (@jhowell-burke),
-	     Joe Gawrieh (@theOtherJoe),
-	     CJ Harris (@mrcjplease)
+            Frédérick Lefebvre (@fred-lefebvre),
+            Stewart Smith (@stewartsmith),
+            Christopher Miller (@mysteriouspants),
+            Sumit Tomer (@sktomer),
+            Sean Kelly (@cbgbt),
+            Tanu Rampal (@trampal),
+            Kyle Gosselin-Harris (@kgharris),
+            Sam Thornton (@mrthornazon),
+            Preston Carpenter (@timidger),
+            Richard Kelly (@rpkelly),
+            Joseph Howell-Burke (@jhowell-burke),
+            Joe Gawrieh (@theOtherJoe),
+            CJ Harris (@mrcjplease)
 GitRepo: https://github.com/amazonlinux/container-images.git
 GitCommit: ${COMMIT_FOR_BRANCH[master]}
 
