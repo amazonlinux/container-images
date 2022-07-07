@@ -3,7 +3,7 @@
 # This script is for quickly rebasing in case of merge conflicts when trying to push to master. 
 
 # Set initial variables
-git_directory="/home/ec2-user/official-images-output/official-images"
+git_directory="$HOME/official-images-output/official-images"
 dockerhub_origin="git@github.com:docker-library/official-images.git"
 
 # Set colors
