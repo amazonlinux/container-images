@@ -1,0 +1,44 @@
+name: Package Request
+description: Request a new or upgrade to an existing package.
+title: "[Package] "
+labels: ["package", "triage"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Amazon Linux is composed of packages. You can request that we
+        add or upgrade a package that is important to you.
+  - type: dropdown
+    id: product
+    attributes:
+      label: Product
+      description: Which Amazon Linux product do you want to know more about?
+      options:
+        - Amazon Linux 1
+        - Amazon Linux 2
+        - Amazon Linux 2023
+    validations:
+      required: true
+  - type: input
+    id: package
+    attributes:
+      label: Package
+      description: What package and version are you interested in?
+      placeholder: libfoo-2.0
+    validations:
+      required: true
+  - type: textarea
+    id: justification
+    attributes:
+      label: Why do you need this package?
+    validations:
+      required: true
+  - type: markdown
+    attributes:
+      value: |
+        This bug tracker is monitored by the subteam of Amazon Linux
+        responsible for building images from packages. You may also
+        consider asking in a more OS-specific issue tracker, or
+        contacting AWS Support. We cannot discuss everything publicly,
+        and may have to refer your question to other teams. Urgent
+        issues must go through AWS Support.

@@ -1,0 +1,40 @@
+name: Security
+description: Security-related questions
+title: "[Security]: "
+labels: ["security", "triage"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Responsibly disclose security issues to AWS Support.
+        We will never discuss private customer information, embargoed
+        security issues, or patching timelines here. To see all issues
+        we are currently tracking, see
+        [ALAS](https://alas.aws.amazon.com/). If you're not sure, please
+        contact AWS Support.
+  - type: dropdown
+    id: product
+    attributes:
+      label: Product
+      description: Which Amazon Linux product do you want to know more about?
+      options:
+        - Amazon Linux 1
+        - Amazon Linux 2
+        - Amazon Linux 2023
+    validations:
+      required: true
+  - type: textarea
+    id: question
+    attributes:
+      label: What is your question?
+    validations:
+      required: true
+  - type: markdown
+    attributes:
+      value: |
+        This bug tracker is monitored by the subteam of Amazon Linux
+        responsible for building images from packages. You may also
+        consider asking in a more OS-specific issue tracker, or
+        contacting AWS Support. We cannot discuss everything publicly,
+        and may have to refer your question to other teams. Urgent
+        issues must go through AWS Support.
