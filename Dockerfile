@@ -3,7 +3,7 @@
 FROM alpine:3.17 AS extract
 
 # The variables set here will determine what is downloaded.
-ARG target_arch="x86_64"
+ARG target_arch="arm64"
 
 ARG amzn_linux_release="al2023"
 ARG amzn_linux_version="2023.3.20231218.0"
