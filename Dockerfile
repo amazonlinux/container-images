@@ -1,6 +1,6 @@
 # Stage 1: Fetch an Alpine container so that we may download the appropriate
 #          version of Amazon Linux
-FROM alpine:3.17 AS extract
+FROM alpine:3.19 AS extract
 
 # The variables set here will determine what is downloaded.
 ARG target_arch="arm64"
