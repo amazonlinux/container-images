@@ -42,9 +42,8 @@ RUN                                                   \
 && sha256sum -c ${amzn_linux_file}.version.sha256     \
 \
 && mkdir /rootfs                                      \
-&& tar -C /rootfs --extract --file ${amzn_linux_file}
-
-RUN echo target_arch="\"${target_arch}\""                | tee version.info    \
+&& tar -C /rootfs --extract --file ${amzn_linux_file} \
+&& echo target_arch="\"${target_arch}\""                | tee version.info    \
 && echo amzn_linux_release="\"${amzn_linux_release}\""   | tee -a version.info \
 && echo amzn_linux_version="\"${amzn_linux_version}\""   | tee -a version.info \
 && echo amzn_linux_file="\"${amzn_linux_file}\""         | tee -a version.info \
