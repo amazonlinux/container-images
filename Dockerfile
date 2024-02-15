@@ -6,7 +6,12 @@ RUN ROOTFS=$(curl -sfOJL -w "al2023-container-2023.3.20240205.2-arm64.tar.xz" "h
   && cat /tmp/al2023-container-2023.3.20240205.2-arm64.tar.xz.sha256 \
   && sha256sum -c /tmp/al2023-container-2023.3.20240205.2-arm64.tar.xz.sha256 \
   && mkdir /rootfs \
-  && tar -C /rootfs --extract --file "${ROOTFS}"
+  && tar \
+    -C /rootfs \
+    --extract \
+    --exclude="./dev/*" \
+    --exclude="./proc/*" \
+    --file "${ROOTFS}"
 
 FROM scratch AS root
 COPY --from=verify /rootfs/ /
